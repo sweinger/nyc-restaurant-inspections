@@ -1,8 +1,10 @@
-require(plyr)
-require(geepack)
-require(ggplot2)
+library (RCurl)
+library(plyr)
+library(geepack)
+library(ggplot2)
 
-rest.dat <- read.csv("DOHMH_New_York_City_Restaurant_Inspection_Results.csv")
+download <- getURL("https://data.cityofnewyork.us/api/views/xx67-kt59/rows.csv?accessType=DOWNLOAD")
+rest.dat <- read.csv (text = download)
 
 rest.dat <- rest.dat[order(rest.dat$CAMIS, as.Date(rest.dat$INSPECTION.DATE,"%m/%d/%Y")),]
 rest.dat$CLOSED <- grepl("Establishment Closed by DOHMH", rest.dat$ACTION)
